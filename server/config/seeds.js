@@ -16,6 +16,18 @@ db.once('open', async () => {
                     title: "Meeting"
                 }
             ]
+        },
+        {
+            username: "malmason66",
+            email: "malmason66@gmail.com",
+            password: "password123!",
+            events: [
+                {
+                    date: 1,
+                    description: "Meeting to discuss homework",
+                    title: "Meeting"
+                }
+            ]
         }
     ]);
     console.log('data seeded')
