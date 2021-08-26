@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/dmcaulay97/day-planner#readme",
   "dependencies": {
+    "@date-io/date-fns": "^2.11.0",
     "graphql": "^15.5.1"
   }
 }

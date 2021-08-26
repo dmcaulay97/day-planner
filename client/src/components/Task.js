@@ -58,7 +58,7 @@ function Task() {
         <CssBaseline />
         <div className={classes.paper} m={1}>
           <Typography variant="h5">
-              Tasks List
+              To Do List
           </Typography>
         </div>
         <form className={classes.form} noValidate>
@@ -71,17 +71,6 @@ function Task() {
 							label="Title"
 							name="title"
 							autoComplete="title"
-							autoFocus
-						/>
-						<TextField
-							variant="outlined"
-							margin="dense"
-							required
-              size="small"
-							name="description"
-							label="Description"
-							id="description"
-							autoComplete="description"
 						/>
             <Box>
               <Button
@@ -103,8 +92,6 @@ function Task() {
                 <ListItemText primary="Sample task 2" />
               </ListItem>
             </List>
-
-
 		      
         </form>
       </Grid>
