@@ -1,19 +1,36 @@
 const db = require('./connection');
-const { User, Event } = require('../models')
+const { User } = require('../models')
+const bcrypt = require('bcrypt');
 
 db.once('open', async () => {
+
+
     await User.deleteMany()
+
+    const password = await bcrypt.hash("1234", 10);
 
     await User.insertMany([
         {
             username: "Dylan",
             email: "dylan@email.com",
-            password: "1234",
+            password: password,
             events: [
                 {
                     date: 1,
                     description: "project meeting",
                     title: "Meeting"
+                }
+            ],
+            tasks: [
+                {
+                    title: "submit homework"
+                },
+                {
+                    title: "shopping"
+                },
+                {
+                    title: "go to the gym",
+                    completed: true
                 }
             ]
         },

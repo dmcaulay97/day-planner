@@ -1,12 +1,13 @@
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Event } = require('../models');
+const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
 	Query: {
 		me: async (parent, args, context) => {
+			console.log(context.user);
 			if (context.user) {
-				return User.findOne({ _id: context.user._id }).populate('savedBooks');
+				return User.findOne({ _id: context.user._id });
 			}
 			throw new AuthenticationError('You need to be logged in!');
 		},
@@ -27,6 +28,7 @@ const resolvers = {
 
 			const token = signToken(user);
 
+
 			return { token, user };
 		},
 		addUser: async (parent, { username, email, password }) => {
@@ -35,17 +37,33 @@ const resolvers = {
 			return { token, user };
 		},
 		saveEvent: async (parent, args, context) => {
+			console.log(context.user._id);
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: context.user._id },
 				{ $addToSet: { events: { ...args } } }
 			)
 			return updatedUser;
 		},
-		removeEvent: async (parent, { args }, context) => {
-			const updatedUser = await user.findOneAndUpdate(
+		removeEvent: async (parent, { _id }, context) => {
+			const updatedUser = await User.findOneAndUpdate(
 				{ _id: context.user._id },
 				{ $pull: { events: { _id } } }
 			)
+			return updatedUser
+		},
+		saveTask: async (parent, args, context) => {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id },
+				{ $addToSet: { tasks: { ...args } } }
+			)
+			return updatedUser;
+		},
+		removeTask: async (parent, { _id }, context) => {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id },
+				{ $pull: { tasks: { _id } } }
+			)
+			return updatedUser
 		},
 
 	}
