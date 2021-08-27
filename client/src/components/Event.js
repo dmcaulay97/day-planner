@@ -50,15 +50,16 @@ function Event() {
 
   return (
     <>
-      <Grid container component="eventSide" className={classes.root}>
+      <Grid container className={classes.root}>
       <CssBaseline />
-        <div className={classes.paper}>
+        <div className={classes.paper} m={1}>
           <Typography variant="h5">
               Add Events
           </Typography>
         </div>
         <form className={classes.form} noValidate>
-        <TextField
+          <Grid container spacing={2} justifyContent={'space-around'}>
+            <TextField
 							variant="outlined"
 							margin="dense"
 							required
@@ -109,6 +110,8 @@ function Event() {
               Save Event
             </Button>
           </Box>
+          </Grid>
+        
         </form>
       </Grid>
     </>

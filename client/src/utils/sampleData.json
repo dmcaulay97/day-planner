@@ -1,0 +1,34 @@
+{
+  "data": {
+    "me": {
+      "_id": "61292d6cbe85f970147600d6",
+      "username": "malmason66",
+      "email": "malmason66@gmail.com",
+      "events": [
+        {
+          "_id": "61292d6cbe85f970147600d7",
+          "description": "Meeting to discuss homework",
+          "title": "Meeting",
+          "date": 1
+        }
+      ],
+      "tasks": [
+        {
+          "_id": "61292d6cbe85f970147600d8",
+          "title": "Complete homework",
+          "completed": false
+        },
+        {
+          "_id": "61292d6cbe85f970147600d9",
+          "title": "Wash the car",
+          "completed": false
+        },
+        {
+          "_id": "61292d6cbe85f970147600da",
+          "title": "Go grocery shopping",
+          "completed": true
+        }
+      ]
+    }
+  }
+}
