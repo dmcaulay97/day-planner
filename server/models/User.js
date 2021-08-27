@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 const eventSchema = require('./Event');
+const taskSchema = require('./Task');
 
 const userSchema = new Schema(
   {
@@ -20,6 +21,7 @@ const userSchema = new Schema(
       required: true,
     },
     events: [eventSchema],
+    tasks: [taskSchema]
   },
   {
     toJSON: {
