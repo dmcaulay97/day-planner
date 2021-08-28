@@ -33,6 +33,30 @@ db.once('open', async () => {
                     completed: true
                 }
             ]
+        },
+        {
+            username: "malmason66",
+            email: "malmason66@gmail.com",
+            password: password,
+            events: [
+                {
+                    date: 1,
+                    description: "Meeting to discuss homework",
+                    title: "Meeting"
+                }
+            ],
+            tasks: [
+                {
+                    title: "Complete homework"
+                },
+                {
+                    title: "Wash the car"
+                },
+                {
+                    title: "Go grocery shopping",
+                    completed: true
+                }
+            ]
         }
     ]);
     console.log('data seeded')

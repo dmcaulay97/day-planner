@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
@@ -6,6 +5,7 @@ import { ApolloProvider, InMemoryCache, ApolloClient, createHttpLink } from '@ap
 import './App.css';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
+import Calendar from './components/Calendar';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -32,12 +32,13 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-    <Router>
-    <Switch>
-      <Route path='/' exact component={SignIn}/>
-      <Route path='/SignUp' exact component={SignUp}/>
-    </Switch>
-    </Router>
+      <Router>
+        <Switch>
+          <Route path='/' exact component={SignIn}/>
+          <Route path='/SignUp' exact component={SignUp}/>
+          <Route path='/Calendar' exact component={Calendar}/>
+        </Switch>
+      </Router>
     </ApolloProvider>
   );
 }
