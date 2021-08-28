@@ -11,14 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../utils/auth';
 import { SAVE_TASK } from '../utils/mutations';
+import { QUERY_ME } from '../utils/queries';
 import sampleData from '../utils/sampleData.json';
 import { ListItemSecondaryAction } from '@material-ui/core';
-
- // Testing to see if we can read the task object. 
-const tasks = sampleData.data.me.tasks;
 
 const useStyles = makeStyles((theme) =>({
   root: {
@@ -41,11 +39,27 @@ const useStyles = makeStyles((theme) =>({
 
 }));
 
+// Verify the token and logged in user information
+const token = Auth.loggedIn() ? Auth.getToken() : null;
+let profile = '';
+let currentUser = '';
+
+
+if(token) {
+  profile = Auth.getProfile();
+  console.log(profile);
+  currentUser = profile.data._id
+  console.log(currentUser);
+}
+
 function Task() {
   const classes = useStyles();
   const [formState, setFormState] = useState({ title: ''});
   const [addTask] = useMutation(SAVE_TASK);
- 
+  const { loading, data } = useQuery(QUERY_ME);
+  
+  const tasks = data?.me.tasks || [];
+  
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const mutationResponse = await addTask({
@@ -53,8 +67,8 @@ function Task() {
         title: formState.title,
       }
     });
-    const token = mutationResponse.data.addTask.token;
-    Auth.login(token);
+    console.log(mutationResponse);
+
   };
 
   const handleChange = (e) => {
