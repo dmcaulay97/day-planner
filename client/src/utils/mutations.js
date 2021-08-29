@@ -66,3 +66,14 @@ mutation removeTask($_id: ID!){
 	}
 }
 `
+export const UPDATE_TASK = gql`
+mutation updateTask($_id: String!, $completed: Boolean!){
+  updateTask(_id: $_id, completed: $completed){
+    _id
+    username
+    tasks{
+      title
+    }
+  }
+}
+`

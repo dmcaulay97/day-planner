@@ -38,6 +38,7 @@ const typeDefs = gql`
 		saveTask(title: String!): User
 		removeEvent(_id: ID!): User
 		removeTask(_id: ID!): User
+		updateTask(_id: String!, completed: Boolean): User
 	}
 
 `;

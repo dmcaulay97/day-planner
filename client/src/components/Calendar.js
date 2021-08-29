@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from './FullCalendar';
 import Task from './Task';
 import Event from './Event';
+import AppBar from './Appbar';
 // Material UI Imports
 
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,6 +23,9 @@ export default function EventSide() {
   return (
     <Grid container component="main" className={classes.root} spacing={2} m={1}>
       <CssBaseline />
+      <Grid item xs={12}>
+        <AppBar />
+      </Grid>
       <Grid item xs={12} sm={3} md={3} className={classes.event}>
         <Event />
       </Grid> {/* Closing tag for event section  */}

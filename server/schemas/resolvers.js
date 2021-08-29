@@ -65,7 +65,14 @@ const resolvers = {
 			)
 			return updatedUser
 		},
-
+		updateTask: async (parent, {_id, completed}, context) => {
+			console.log(_id, completed)
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id, 'tasks._id': _id },
+				{ $set: { 'tasks.$.completed': completed } }
+			)
+			return updatedUser
+		},
 	}
 
 }
