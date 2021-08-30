@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from './FullCalendar';
 import Task from './Task';
 import Event from './Event';
@@ -9,6 +9,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { QUERY_ME } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+
 const useStyles = makeStyles((theme) =>({
   root: {
     height: '100vh',
@@ -17,8 +20,14 @@ const useStyles = makeStyles((theme) =>({
 
 }));
 
-export default function EventSide() {
+// export default function EventSide()
+
+const EventSide = () => { 
   const classes = useStyles();
+
+  const { loading, data } = useQuery(QUERY_ME);
+  const events = data?.me.events || [];
+  const [event, setEvent] = useState([events])
 
   return (
     <Grid container component="main" className={classes.root} spacing={2} m={1}>
@@ -38,3 +47,5 @@ export default function EventSide() {
     </Grid>
   )
 }
+
+export default EventSide;

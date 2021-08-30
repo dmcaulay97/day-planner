@@ -25,7 +25,7 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_EVENT = gql`
-mutation saveEvent( $description: String!, $title: String!, $date: Int!){
+mutation saveEvent( $description: String!, $title: String!, $date: String!){
 	 saveEvent(description: $description, title: $title, date: $date){
 		_id
 		username

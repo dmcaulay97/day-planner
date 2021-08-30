@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +13,11 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+
+import { QUERY_ME } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+import Auth from '../utils/auth';
+import { ADD_EVENT } from '../utils/actions';
 
 const useStyles = makeStyles((theme) =>({
   root: {
@@ -34,7 +39,7 @@ const useStyles = makeStyles((theme) =>({
 	}
 }));
 
-function Event() {
+const  Event = () => {
   const classes = useStyles();
 
   const [startDate, setStartDate] = useState(new Date());

@@ -7,29 +7,50 @@ import listPlugin from '@fullcalendar/list';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
+import { QUERY_ME } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+import moment from 'moment';
 
-const events = [{
-  events: [{ title: 'Shift Meeting', date: '2021-08-11', className:['birthdayStyle']},
-  { title: 'Doctor Appt.', date: '2021-08-17'},
-  { title: 'Vacation', date: '2021-08-18', backgroundColor: 'coral', borderColor: 'darkred'}
-]
-}]
-export default class Calendar extends React.Component {
-  render() {
+// FORMAT OF EVENTS THAT NEED TO BE PASSED INTO THE CALENDAR. 
+// const events = [{
+//   events: [{ title: 'Shift Meeting', date: '2021-08-11', className:['birthdayStyle']},
+//   { title: 'Doctor Appt.', date: '2021-08-17'},
+//   { title: 'Vacation', date: '2021-08-18', backgroundColor: 'coral', borderColor: 'darkred'}
+// ]
+// }];
+
+
+const Calendar = () => {
+    
+  const { loading, data } = useQuery(QUERY_ME);
+  const eventsOriginal = data?.me.events || [];
+  console.log(eventsOriginal);
+  const events = [];
+  
+  eventsOriginal.forEach(event => {
+    const newElement = {
+      title: event.title,
+      date:  moment.utc(event.date).format('YYYY-MM-DD'),
+      category: event.category
+    }
+
+    events.push(newElement);
+  });
+
+  const newEvents = [{events}]
+
     return (
-      <FullCalendar
+      <section>
+        <FullCalendar
         plugins={[ dayGridPlugin, interactionPlugin,  timeGridPlugin, listPlugin, bootstrapPlugin]}
         headerToolbar={{
           right: 'prev,next dayGridMonth,timeGridWeek,timeGridDay,listMonth'
         }}
-        dateClick={this.handleDateClick}
         initialView="dayGridMonth"
-        eventSources={events}
-      />
+        eventSources={newEvents}
+       />
+      </section>  
     )
   }
 
-handleDateClick = (arg) => {
-alert(arg.dateStr)
-}
-}
+  export default Calendar;

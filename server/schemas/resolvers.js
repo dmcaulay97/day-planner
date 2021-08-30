@@ -1,8 +1,10 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
+const DateTime = require('../utils/DateTime');
 
 const resolvers = {
+	DateTime,
 	Query: {
 		me: async (parent, args, context) => {
 			console.log(context.user);
