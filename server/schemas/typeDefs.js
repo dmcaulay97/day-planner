@@ -19,8 +19,8 @@ const typeDefs = gql`
       
 	type Event {
 		_id: ID!
-		description: String!
-		date: DateTime!
+		start: DateTime!
+		end: DateTime!
 		title: String!
 		category: String
 	}
@@ -37,7 +37,7 @@ const typeDefs = gql`
 	type Mutation {
 		login(email: String!, password: String!): Auth
 		addUser(username: String!, email: String!, password: String!): Auth
-		saveEvent(date: DateTime!, description: String!, title: String!, category: String!): User 
+		saveEvent(start: DateTime!, end: DateTime!, title: String!, category: String!): User 
 		saveTask(title: String!): User
 		removeEvent(_id: ID!): User
 		removeTask(_id: ID!): User

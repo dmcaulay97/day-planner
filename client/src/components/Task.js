@@ -70,7 +70,6 @@ function Task() {
       }
     });
     console.log(mutationResponse);
-
   };
 
   const handleChange = (e) => {

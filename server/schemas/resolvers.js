@@ -39,6 +39,7 @@ const resolvers = {
 			return { token, user };
 		},
 		saveEvent: async (parent, args, context) => {
+			console.log(args)
 			console.log(context.user._id);
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: context.user._id },

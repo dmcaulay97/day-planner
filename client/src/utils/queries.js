@@ -8,9 +8,9 @@ export const QUERY_ME = gql`
       email
       events {
         _id
-        description
 	      title
-	      date
+	      start
+        end
         category
       }
       tasks{

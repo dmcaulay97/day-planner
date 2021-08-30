@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Calendar from './FullCalendar';
 import Task from './Task';
 import Event from './Event';
@@ -8,9 +8,6 @@ import AppBar from './Appbar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-
-import { QUERY_ME } from '../utils/queries';
-import { useQuery } from '@apollo/client';
 
 const useStyles = makeStyles((theme) =>({
   root: {
@@ -24,10 +21,6 @@ const useStyles = makeStyles((theme) =>({
 
 const EventSide = () => { 
   const classes = useStyles();
-
-  const { loading, data } = useQuery(QUERY_ME);
-  const events = data?.me.events || [];
-  const [event, setEvent] = useState([events])
 
   return (
     <Grid container component="main" className={classes.root} spacing={2} m={1}>

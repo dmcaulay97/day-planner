@@ -13,9 +13,9 @@ import moment from 'moment';
 
 // FORMAT OF EVENTS THAT NEED TO BE PASSED INTO THE CALENDAR. 
 // const events = [{
-//   events: [{ title: 'Shift Meeting', date: '2021-08-11', className:['birthdayStyle']},
-//   { title: 'Doctor Appt.', date: '2021-08-17'},
-//   { title: 'Vacation', date: '2021-08-18', backgroundColor: 'coral', borderColor: 'darkred'}
+//   events: [{ title: 'Shift Meeting', start: '2021-08-11', end: '2021-08-11', className:['birthdayStyle']},
+//   { title: 'Doctor Appt.', start: '2021-08-17', end: '2021-08-17'},
+//   { title: 'Vacation', start: '2021-08-18', end: '2021-08-18, backgroundColor: 'coral', borderColor: 'darkred'}
 // ]
 // }];
 
@@ -30,7 +30,8 @@ const Calendar = () => {
   eventsOriginal.forEach(event => {
     const newElement = {
       title: event.title,
-      date:  moment.utc(event.date).format('YYYY-MM-DD'),
+      start:  moment.utc(event.start).format('YYYY-MM-DD'),
+      end:  moment.utc(event.end).format('YYYY-MM-DD'),
       category: event.category
     }
 
@@ -48,6 +49,7 @@ const Calendar = () => {
         }}
         initialView="dayGridMonth"
         eventSources={newEvents}
+        editable='true'
        />
       </section>  
     )
