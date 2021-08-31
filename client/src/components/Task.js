@@ -6,6 +6,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListSubheader from '@material-ui/core/ListSubheader'
 import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -13,22 +14,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../utils/auth';
-import { SAVE_TASK } from '../utils/mutations';
+import { SAVE_TASK, UPDATE_TASK } from '../utils/mutations';
 import { QUERY_ME } from '../utils/queries';
-import sampleData from '../utils/sampleData.json';
 import { ListItemSecondaryAction } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) =>({
   root: {
     height: '100vh',
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
   form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1),
 	},
   paper: {
-		margin: theme.spacing(4, 'auto'),
+		margin: theme.spacing(8, 'auto'),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -55,7 +55,9 @@ if(token) {
 function Task() {
   const classes = useStyles();
   const [formState, setFormState] = useState({ title: ''});
+
   const [addTask] = useMutation(SAVE_TASK);
+  const [updateTask] = useMutation(UPDATE_TASK);
   const { loading, data } = useQuery(QUERY_ME);
   
   const tasks = data?.me.tasks || [];
@@ -68,7 +70,6 @@ function Task() {
       }
     });
     console.log(mutationResponse);
-
   };
 
   const handleChange = (e) => {
@@ -77,6 +78,18 @@ function Task() {
       ...formState,
       [name]: value,
     });
+  };
+
+  const handleCheckChange = async (e) => {
+    e.preventDefault();
+    console.log(e.target.value, e.target.checked)
+    const mutationResponse = await updateTask({
+      variables: {
+        _id: e.target.value,
+        completed: e.target.checked,
+      }
+    })
+    
   };
 
   return (
@@ -119,6 +132,9 @@ function Task() {
           </Grid>
           <Grid container justifyContent="space-around">
             <List component="nav" className={classes.root} aria-label="tasks">
+              <ListSubheader component="div" id="nested-list-subheader" color="primary"> 
+                TO DO HISTORY
+              </ListSubheader>
               {tasks.map((task) => (
                 <ListItem dense button key={task._id}>
                   <ListItemText>
@@ -128,6 +144,8 @@ function Task() {
                     <Checkbox 
                       edge="end"
                       checked={task.completed}
+                      value={task._id}
+                      onChange={handleCheckChange}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>

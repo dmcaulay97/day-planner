@@ -1,6 +1,8 @@
 const { gql } = require('apollo-server-express');
+const DateTime = require('../utils/DateTime');
 
 const typeDefs = gql`
+	scalar DateTime
 	type User {
 		_id: ID!
 		username: String!
@@ -17,9 +19,10 @@ const typeDefs = gql`
       
 	type Event {
 		_id: ID!
-		description: String!
-		date: Int!
+		start: DateTime!
+		end: DateTime!
 		title: String!
+		category: String
 	}
 
 	type Auth {
@@ -34,13 +37,16 @@ const typeDefs = gql`
 	type Mutation {
 		login(email: String!, password: String!): Auth
 		addUser(username: String!, email: String!, password: String!): Auth
-		saveEvent(date: Int!, description: String!, title: String!): User 
+		saveEvent(start: DateTime!, end: DateTime!, title: String!, category: String!): User 
 		saveTask(title: String!): User
 		removeEvent(_id: ID!): User
 		removeTask(_id: ID!): User
+		updateTask(_id: String!, completed: Boolean): User
+		updateEvent(_id: String!, title: String!, start: DateTime!, end: DateTime!, category: String!): User
 	}
 
 `;
+
 module.exports = typeDefs;
 
 //update look at !

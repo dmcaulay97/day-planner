@@ -25,14 +25,15 @@ export const ADD_USER = gql`
 `;
 
 export const SAVE_EVENT = gql`
-mutation saveEvent( $description: String!, $title: String!, $date: Int!){
-	 saveEvent(description: $description, title: $title, date: $date){
+mutation saveEvent($title: String!, $start: DateTime!, $end: DateTime!, $category: String!){
+	 saveEvent(title: $title, start: $start, end: $end, category: $category){
 		_id
 		username
     events{
-      date
-      description
+      start
+      end
       title
+      category
     }
 	 }
 	}
@@ -46,6 +47,22 @@ mutation removeEvent($_id: ID!){
 	}
 }
 `
+
+export const UPDATE_EVENT = gql`
+mutation updateEvent($_id: String!, $title: String!, $start: DateTime!, $end: DateTime!, $category: String!){
+  updateEvent(_id: $_id, title: $title, start: $start, end: $end, category: $category){
+    _id
+		username
+    events{
+      start
+      end
+      title
+      category
+    }
+  }
+}
+`
+
 export const SAVE_TASK = gql`
 mutation saveTask($title: String!){
   saveTask(title: $title){
@@ -64,5 +81,16 @@ mutation removeTask($_id: ID!){
 		_id
 		username
 	}
+}
+`
+export const UPDATE_TASK = gql`
+mutation updateTask($_id: String!, $completed: Boolean!){
+  updateTask(_id: $_id, completed: $completed){
+    _id
+    username
+    tasks{
+      title
+    }
+  }
 }
 `

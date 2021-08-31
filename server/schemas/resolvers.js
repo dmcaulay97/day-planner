@@ -1,8 +1,10 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
+const DateTime = require('../utils/DateTime');
 
 const resolvers = {
+	DateTime,
 	Query: {
 		me: async (parent, args, context) => {
 			console.log(context.user);
@@ -37,6 +39,7 @@ const resolvers = {
 			return { token, user };
 		},
 		saveEvent: async (parent, args, context) => {
+			console.log(args)
 			console.log(context.user._id);
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: context.user._id },
@@ -65,9 +68,28 @@ const resolvers = {
 			)
 			return updatedUser
 		},
-
+		updateTask: async (parent, {_id, completed}, context) => {
+			console.log(_id, completed)
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id, 'tasks._id': _id },
+				{ $set: { 'tasks.$.completed': completed } }
+			)
+			return updatedUser
+		},
+		updateEvent: async (parent, {_id, title, start, end, category }, context) => {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id, 'events._id': _id },
+				{ $set: { 
+					'events.$.title': title, 
+					'events.$.start': start,
+					'events.$.end': end,
+					'events.$.category': category
+					} 
+				}
+			)
+			return updatedUser
+		}
 	}
-
 }
 
 module.exports = resolvers;

@@ -16,8 +16,8 @@ db.once('open', async () => {
             password: password,
             events: [
                 {
-                    date: 1,
-                    description: "project meeting",
+                    start: "2021-08-29",
+                    end: "2021-08-29",
                     title: "Meeting"
                 }
             ],
@@ -40,9 +40,22 @@ db.once('open', async () => {
             password: password,
             events: [
                 {
-                    date: 1,
-                    description: "Meeting to discuss homework",
-                    title: "Meeting"
+                    start: "2021-08-29",
+                    end: "2021-08-29",
+                    title: "Meeting",
+                    category: "Meetings"
+                },
+                {
+                    start: "2021-08-11",
+                    end: "2021-08-11",
+                    title: "My Birthday",
+                    category: "Birthdays"
+                },
+                {
+                    start: "2021-08-25",
+                    end: "2021-08-25",
+                    title: "Vacation",
+                    category: "Personal"
                 }
             ],
             tasks: [
