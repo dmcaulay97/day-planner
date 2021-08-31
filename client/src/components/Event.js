@@ -18,12 +18,9 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
-
 import { useMutation, useQuery } from '@apollo/client';
-import Auth from '../utils/auth';
-import { SAVE_EVENT, SAVE_TASK, UPDATE_TASK } from '../utils/mutations';
+import { SAVE_EVENT } from '../utils/mutations';
 import { QUERY_ME } from '../utils/queries';
-import moment from 'moment';
 
 const useStyles = makeStyles((theme) =>({
   root: {

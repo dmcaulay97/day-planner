@@ -76,8 +76,20 @@ const resolvers = {
 			)
 			return updatedUser
 		},
+		updateEvent: async (parent, {_id, title, start, end, category }, context) => {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id, 'events._id': _id },
+				{ $set: { 
+					'events.$.title': title, 
+					'events.$.start': start,
+					'events.$.end': end,
+					'events.$.category': category
+					} 
+				}
+			)
+			return updatedUser
+		}
 	}
-
 }
 
 module.exports = resolvers;

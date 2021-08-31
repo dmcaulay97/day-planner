@@ -42,6 +42,7 @@ const typeDefs = gql`
 		removeEvent(_id: ID!): User
 		removeTask(_id: ID!): User
 		updateTask(_id: String!, completed: Boolean): User
+		updateEvent(_id: String!, title: String!, start: DateTime!, end: DateTime!, category: String!): User
 	}
 
 `;

@@ -47,6 +47,22 @@ mutation removeEvent($_id: ID!){
 	}
 }
 `
+
+export const UPDATE_EVENT = gql`
+mutation updateEvent($_id: String!, $title: String!, $start: DateTime!, $end: DateTime!, $category: String!){
+  updateEvent(_id: $_id, title: $title, start: $start, end: $end, category: $category){
+    _id
+		username
+    events{
+      start
+      end
+      title
+      category
+    }
+  }
+}
+`
+
 export const SAVE_TASK = gql`
 mutation saveTask($title: String!){
   saveTask(title: $title){
