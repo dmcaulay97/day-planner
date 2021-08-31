@@ -1,6 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
+const stripe = require('stripe')('sk_test_51JTSRdFMEfANyIQP9Cj6dexVHzanirNMuorPcHKqZSl5YdmJIIvmnQDU3Vvsrul67S8ojsV1nZt2ZwTsBPZPOIit00o7kr5MZR');
 
 const resolvers = {
 	Query: {
@@ -11,6 +12,25 @@ const resolvers = {
 			}
 			throw new AuthenticationError('You need to be logged in!');
 		},
+		checkout: async (parent, args, context) => {
+			const url = new URL(context.headers.referer).origin;
+			const priceId = args.priceId
+			const session = await stripe.checkout.sessions.create({
+				mode: 'subscription',
+				payment_method_types: ['card'],
+				line_items: [
+					{
+						price: priceId,
+						quantity: 1
+					}
+				],
+				success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+				cancel_url: `${url}/`
+			})
+			console.log(session);
+			console.log(session.id);
+			return { session: session.id };
+		}
 	},
 	Mutation: {
 		login: async (parent, { email, password }) => {

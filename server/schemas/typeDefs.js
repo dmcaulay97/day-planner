@@ -22,6 +22,10 @@ const typeDefs = gql`
 		title: String!
 	}
 
+	type Checkout {
+		session: ID
+	  }
+
 	type Auth {
 		token: ID!
 		user: User
@@ -29,6 +33,7 @@ const typeDefs = gql`
 	
 	type Query {
 		me: User
+		checkout(priceId: ID): Checkout
 	}
 
 	type Mutation {
