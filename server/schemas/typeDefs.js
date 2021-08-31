@@ -29,9 +29,14 @@ const typeDefs = gql`
 		token: ID!
 		user: User
 	}
+
+	type Checkout {
+		session: ID
+	  }
 	
 	type Query {
 		me: User
+		checkout(priceId: ID): Checkout
 	}
 
 	type Mutation {
