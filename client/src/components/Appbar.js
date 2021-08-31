@@ -28,8 +28,8 @@ export default function ButtonAppBar() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="sticky">
+    <div className={classes.root} style={{position: 'sticky', marginBottom: '70px', zIndex: 2}}>
+      <AppBar>
         <Toolbar>
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
             <MenuIcon />

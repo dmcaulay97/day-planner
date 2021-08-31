@@ -16,6 +16,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
+  KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
 import { useMutation, useQuery } from '@apollo/client';
@@ -25,14 +26,13 @@ import { QUERY_ME } from '../utils/queries';
 const useStyles = makeStyles((theme) =>({
   root: {
     height: '100vh',
-    backgroundColor: theme.palette.background.paper,
   },
   form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1),
 	},
   paper: {
-		margin: theme.spacing(4, 'auto'),
+		margin: theme.spacing('auto', 'auto'),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
@@ -60,8 +60,6 @@ const  Event = () => {
   const [addEvent] = useMutation(SAVE_EVENT);
   const { loading, data } = useQuery(QUERY_ME);
   
-  const events = data?.me.events || [];
-
   const handleDateChange = (date) => {
     setStartDate(date);
   };
@@ -73,6 +71,7 @@ const  Event = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(Math.round(new Date(startDate) / 1000), Math.round(new Date(endDate) / 1000));
+    console.log(new Date(startDate), new Date(endDate))
     const mutationResponse = await addEvent({
       variables: {
         title: formState.title,
@@ -92,11 +91,12 @@ const  Event = () => {
     });
   };
 
-  const handleSelect = (e) => {
+  const handleSelect = (e, index, value) => {
     setCategory({
       ...category,
       category: e.target.value,
     });
+    console.log(e.target.value, category.category)
   };
 
   return (
@@ -127,23 +127,23 @@ const  Event = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={category}
+                  value={category.category}
                   onChange={handleSelect}
                 >
-                <MenuItem value={'Personal'}>Personal</MenuItem>
-                <MenuItem value={'Vacation'}>Vacation</MenuItem>
-                <MenuItem value={'Meetings'}>Meetings</MenuItem>
-                <MenuItem value={'Birthdays'}>Birthdays</MenuItem>
+                <MenuItem key={'Personal'} value={'Personal'}>Personal</MenuItem>
+                <MenuItem key={'Vacation'} value={'Vacation'}>Vacation</MenuItem>
+                <MenuItem key={'Meetings'} value={'Meetings'}>Meetings</MenuItem>
+                <MenuItem key={'Birthdays'} value={'Birthdays'}>Birthdays</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justifyContent="space-around">
-              <KeyboardDatePicker
+              <KeyboardDateTimePicker
                 margin="normal"
                 id="eventStart"
                 label="Event Start"
-                format="MM/dd/yyyy"
+                format="MM/dd/yyyy h:mm a"
                 value={startDate}
                 onChange={handleDateChange}
                 KeyboardButtonProps={{
@@ -154,11 +154,11 @@ const  Event = () => {
           </MuiPickersUtilsProvider>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justifyContent="space-around">
-              <KeyboardDatePicker
+              <KeyboardDateTimePicker
                 margin="normal"
                 id="endStart"
                 label="Event End"
-                format="MM/dd/yyyy"
+                format="MM/dd/yyyy h:mm a"
                 value={endDate}
                 onChange={endDateChange}
                 KeyboardButtonProps={{

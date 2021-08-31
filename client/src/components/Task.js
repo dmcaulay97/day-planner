@@ -21,14 +21,14 @@ import { ListItemSecondaryAction } from '@material-ui/core';
 const useStyles = makeStyles((theme) =>({
   root: {
     height: '100vh',
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
   form: {
 		width: '100%', // Fix IE 11 issue.
 		marginTop: theme.spacing(1),
 	},
   paper: {
-		margin: theme.spacing(4, 'auto'),
+		margin: theme.spacing(8, 'auto'),
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
