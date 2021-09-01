@@ -2,6 +2,7 @@ const { AuthenticationError } = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const DateTime = require('../utils/DateTime');
+const stripe = require('stripe')('sk_test_51JTSRdFMEfANyIQP9Cj6dexVHzanirNMuorPcHKqZSl5YdmJIIvmnQDU3Vvsrul67S8ojsV1nZt2ZwTsBPZPOIit00o7kr5MZR');
 
 const resolvers = {
 	DateTime,
@@ -13,6 +14,25 @@ const resolvers = {
 			}
 			throw new AuthenticationError('You need to be logged in!');
 		},
+		checkout: async (parent, args, context) => {
+			const url = new URL(context.headers.referer).origin;
+			const priceId = args.priceId
+			const session = await stripe.checkout.sessions.create({
+				mode: 'subscription',
+				payment_method_types: ['card'],
+				line_items: [
+					{
+						price: priceId,
+						quantity: 1
+					}
+				],
+				success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+				cancel_url: `${url}/`
+			})
+			console.log(session);
+			console.log(session.id);
+			return { session: session.id };
+		}
 	},
 	Mutation: {
 		login: async (parent, { email, password }) => {
@@ -68,7 +88,7 @@ const resolvers = {
 			)
 			return updatedUser
 		},
-		updateTask: async (parent, {_id, completed}, context) => {
+		updateTask: async (parent, { _id, completed }, context) => {
 			console.log(_id, completed)
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: context.user._id, 'tasks._id': _id },
@@ -76,15 +96,16 @@ const resolvers = {
 			)
 			return updatedUser
 		},
-		updateEvent: async (parent, {_id, title, start, end, category }, context) => {
+		updateEvent: async (parent, { _id, title, start, end, category }, context) => {
 			const updatedUser = await User.findOneAndUpdate(
 				{ _id: context.user._id, 'events._id': _id },
-				{ $set: { 
-					'events.$.title': title, 
-					'events.$.start': start,
-					'events.$.end': end,
-					'events.$.category': category
-					} 
+				{
+					$set: {
+						'events.$.title': title,
+						'events.$.start': start,
+						'events.$.end': end,
+						'events.$.category': category
+					}
 				}
 			)
 			return updatedUser
