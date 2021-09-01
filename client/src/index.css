@@ -25,6 +25,20 @@ code {
   text-decoration: none;
   color: white;
 }
+.fc-daygrid-day {
+  background-color: rgb(149, 149, 150);
+}
+.fc-daygrid-day-number {
+  text-decoration: none;
+  color: #fff;
+}
+.fc-daygrid-event {
+  color: #fff;
+}
+.fc-daygrid-event:hover {
+  color: #fff;
+  background-color: rgb(233, 181, 50) !important;
+}
 .Personal {
   background-color: seagreen;
   color: white;
