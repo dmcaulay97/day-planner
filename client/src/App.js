@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { setContext } from '@apollo/client/link/context';
 import { ApolloProvider, InMemoryCache, ApolloClient, createHttpLink } from '@apollo/client';
 import './App.css';
@@ -8,6 +8,7 @@ import SignUp from './components/SignUp';
 import Calendar from './components/Calendar';
 import Subscription from './components/Subscription';
 import Success from './pages/Success';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -38,9 +39,9 @@ function App() {
         <Switch>
           <Route path='/' exact component={SignIn} />
           <Route path='/SignUp' exact component={SignUp} />
-          <Route path='/Calendar' exact component={Calendar} />
-          <Route path='/Subscription' exact component={Subscription} />
-          <Route exact path="/success" component={Success} />
+          <ProtectedRoute path='/Calendar' exact component={Calendar} />
+          <ProtectedRoute path='/Subscription' exact component={Subscription} />
+          <ProtectedRoute exact path="/success" component={Success} />
         </Switch>
       </Router>
     </ApolloProvider>
