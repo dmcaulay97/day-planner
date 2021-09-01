@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +20,14 @@ const useStyles = makeStyles((theme) => ({
   linkSection: {
     display: 'flex',
     alignItems: 'right'
+  },
+  navLinks: {
+    textDecoration: 'none',
+    color: '#fff',
+    "&:hover": {
+      borderBottom: "3px solid #fff",
+      color: '#fff'
+    }
   }
 
 }));
@@ -35,10 +43,16 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <div className={classes.linkSection}>
-            <Button color="inherit">Profile</Button>
-            <Button color="inherit">Contact Us</Button>
-          </div>
-            
+            <Link to='/Calendar' className={classes.navLinks}>
+              <Button color="inherit">Calendar</Button>
+            </Link>
+            <Link to='/About' className={classes.navLinks}>
+              <Button color="inherit">About</Button>
+            </Link>
+            <Link to='/' className={classes.navLinks}>
+              <Button color="inherit">Logout</Button>
+            </Link>
+          </div>      
         </Toolbar>
       </AppBar>
     </div>

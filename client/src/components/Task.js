@@ -12,9 +12,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { useMutation, useQuery } from '@apollo/client';
 import Auth from '../utils/auth';
-import { SAVE_TASK, UPDATE_TASK } from '../utils/mutations';
+import { SAVE_TASK, UPDATE_TASK, REMOVE_TASK } from '../utils/mutations';
 import { QUERY_ME } from '../utils/queries';
 import { ListItemSecondaryAction } from '@material-ui/core';
 
@@ -55,9 +56,9 @@ if(token) {
 function Task() {
   const classes = useStyles();
   const [formState, setFormState] = useState({ title: ''});
-
   const [addTask] = useMutation(SAVE_TASK);
   const [updateTask] = useMutation(UPDATE_TASK);
+  const [deleteTask] = useMutation(REMOVE_TASK);
   const { loading, data } = useQuery(QUERY_ME);
   
   const tasks = data?.me.tasks || [];
@@ -90,6 +91,15 @@ function Task() {
       }
     })
     
+  };
+
+  const handleDelete = async (id) => {
+
+    const result = await deleteTask({
+      variables: {
+        _id: id,
+      }
+    })
   };
 
   return (
@@ -130,6 +140,7 @@ function Task() {
               </Button>
             </Box>
           </Grid>
+      
           <Grid container justifyContent="space-around">
             <List component="nav" className={classes.root} aria-label="tasks">
               <ListSubheader component="div" id="nested-list-subheader" color="primary"> 
@@ -138,6 +149,10 @@ function Task() {
               {tasks.map((task) => (
                 <ListItem dense button key={task._id}>
                   <ListItemText>
+                  <DeleteIcon 
+                    color='error'
+                    onClick={()=> handleDelete(task._id)}
+                    />
                     {task.title}
                   </ListItemText>
                   <ListItemSecondaryAction>

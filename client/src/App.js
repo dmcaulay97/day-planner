@@ -6,7 +6,7 @@ import './App.css';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Calendar from './components/Calendar';
-import Subscription from './components/Subscription';
+import About from './components/About';
 import Success from './pages/Success';
 import ProtectedRoute from './components/ProtectedRoute';
 
@@ -37,10 +37,10 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <Switch>
-          <Route path='/' exact component={SignIn} />
-          <Route path='/SignUp' exact component={SignUp} />
-          <ProtectedRoute path='/Calendar' exact component={Calendar} />
-          <ProtectedRoute path='/Subscription' exact component={Subscription} />
+          <Route path='/' exact component={SignIn}/>
+          <Route path='/SignUp' exact component={SignUp}/>
+          <ProtectedRoute path='/Calendar' exact component={Calendar}/>
+          <ProtectedRoute path='/About' exact component={About}/>
           <ProtectedRoute exact path="/success" component={Success} />
         </Switch>
       </Router>

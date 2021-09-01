@@ -40,10 +40,16 @@ mutation saveEvent($title: String!, $start: DateTime!, $end: DateTime!, $categor
 `
 
 export const REMOVE_EVENT = gql`
-mutation removeEvent($_id: ID!){
+mutation removeEvent($_id: String!){
 	removeEvent(_id: $_id){
 		_id
 		username
+    events{
+      start
+      end
+      title
+      category
+    }
 	}
 }
 `
@@ -76,10 +82,13 @@ mutation saveTask($title: String!){
 `
 
 export const REMOVE_TASK = gql`
-mutation removeTask($_id: ID!){
+mutation removeTask($_id: String!){
 	removeTask(_id: $_id){
 		_id
 		username
+    tasks{
+      title
+    }
 	}
 }
 `
