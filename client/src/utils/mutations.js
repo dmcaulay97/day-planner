@@ -76,10 +76,13 @@ mutation saveTask($title: String!){
 `
 
 export const REMOVE_TASK = gql`
-mutation removeTask($_id: ID!){
+mutation removeTask($_id: String!){
 	removeTask(_id: $_id){
 		_id
 		username
+    tasks{
+      title
+    }
 	}
 }
 `

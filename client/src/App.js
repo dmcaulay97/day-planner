@@ -6,6 +6,7 @@ import './App.css';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import Calendar from './components/Calendar';
+import About from './components/About';
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -37,6 +38,7 @@ function App() {
           <Route path='/' exact component={SignIn}/>
           <Route path='/SignUp' exact component={SignUp}/>
           <Route path='/Calendar' exact component={Calendar}/>
+          <Route path='/About' exact component={About}/>
         </Switch>
       </Router>
     </ApolloProvider>
