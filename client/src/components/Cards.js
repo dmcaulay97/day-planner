@@ -35,8 +35,7 @@ const TagneCard = {
 const useStyles = makeStyles((theme) =>({
   root: {
     height: '80vh',
-    backgroundColor: theme.palette.background.paper,
-    marginLeft: '10px',
+    marginLeft: '20px',
   }
 
 }));
@@ -45,16 +44,16 @@ export default function Cards() {
   const classes = useStyles();
   return (
     <Grid container component='cards' justifyContent={'space-between'} spacing={4} className={classes.root}>
-      <Grid container item xs={12} md={6}>
+      <Grid container item xs={12} md={5}>
         <GitHubCard content={QytezaCard}/>
       </Grid>
-      <Grid container item xs={12} md={6}>
+      <Grid container item xs={12} md={5}>
         <GitHubCard content={MasonCard}/>
       </Grid> 
-      <Grid container item xs={12} md={6}>
+      <Grid container item xs={12} md={5}>
         <GitHubCard content={McaulayCard}/>
       </Grid>
-      <Grid container item xs={12} md={6}>
+      <Grid container item xs={12} md={5}>
         <GitHubCard content={TagneCard}/>
       </Grid> 
     </Grid>
