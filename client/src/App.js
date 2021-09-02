@@ -8,6 +8,7 @@ import SignUp from './components/SignUp';
 import Calendar from './components/Calendar';
 import About from './components/About';
 import Success from './pages/Success';
+import Profile from './components/Profile';
 import ProtectedRoute from './components/ProtectedRoute';
 
 const httpLink = createHttpLink({
@@ -42,6 +43,7 @@ function App() {
           <ProtectedRoute path='/Calendar' exact component={Calendar}/>
           <ProtectedRoute path='/About' exact component={About}/>
           <ProtectedRoute exact path="/success" component={Success} />
+          <ProtectedRoute exact path="/Profile" component={Profile} />
         </Switch>
       </Router>
     </ApolloProvider>

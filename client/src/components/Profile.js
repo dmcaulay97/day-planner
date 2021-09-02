@@ -1,61 +1,58 @@
 import React from 'react';
-import {Box, Button, Card, CardActions, CardContent, CardHeader, TextField, Grid,
-    Divider, Typography
+import Subscription from './Subscription';
+import { useState } from 'react';
+import AppBar from './Appbar';
+import { useQuery, useMutation } from '@apollo/client';
+import  { QUERY_ME } from '../utils/queries';
+import { UPDATE_USER} from '../utils/mutations';
+import {Box, Button, Card, CardContent, CardHeader, TextField, Grid,
+    Divider, 
 } from '@material-ui/core';
 
-const user = {
-  username: '',
-  email: ''
-};
 
-const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
 
 const Profile = (props) => {
-    (
-  <Card {...props}>
-    <CardContent>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexDirection: 'column'
-        }}
-      >
-        <Typography
-          color="textPrimary"
-          gutterBottom
-          variant="h3"
-        >
-          {user.username}
-        </Typography>
-        <Typography
-          color="textPrimary"
-          gutterBottom
-          variant="h3"
-        >
-          {user.email}
-        </Typography>
-      </Box>
-    </CardContent>
-    <Divider />
-    <CardActions>
-      <Button
-        color="primary"
-        fullWidth
-        variant="text"
-      >
-        Add Subscription
-      </Button>
-    </CardActions>
-  </Card>
-);
 
+    
+    
+
+const [ username, setUsername] = useState({username: ''});
+
+const [ email, setEmail] = useState({email: ''});
+
+const [ password, setPassword] = useState({password: ''});
+
+const [ updateUser ] = useMutation(UPDATE_USER)
+
+const handleUsername = (event) => {
+    setUsername(event.target.value);
+  };
+const handleEmail = (event) => {
+    setEmail(event.target.value);
+  };
+  const handlePassword = (event) => {
+      setPassword(event.target.value);
+  };
+  const handleSubmit = async ()  => {
+    const response = await updateUser({
+        variables: {
+            username: username,
+            email: email,
+            password: password
+        }
+    })
+  }
+
+  const { loading, data } = useQuery(QUERY_ME);
+  const user = data?.me || [];
+  
+ 
   return (
+    <Grid container component="main" justifyContent={'space-evenly'}>
+    <Grid item xs={12}>
+    <AppBar />
+  </Grid>
+
     <form
       autoComplete="off"
       noValidate
@@ -80,11 +77,10 @@ const Profile = (props) => {
               <TextField
                 fullWidth
                 helperText="Please specify the username"
-                label="User name"
-                name="userName"
-                onChange={handleChange}
+                name="username"
+                placeholder={user.username}
+                onChange={handleUsername}
                 required
-                value={values.userName}
                 variant="outlined"
               />
             </Grid>
@@ -95,11 +91,25 @@ const Profile = (props) => {
             >
               <TextField
                 fullWidth
-                label="Email Address"
                 name="email"
-                onChange={handleChange}
+                placeholder={user.email}
+                onChange={handleEmail}
                 required
-                value={values.email}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                helperText="Enter your password"
+                name="password"
+                onChange={handlePassword}
+                required
+                type='password'
                 variant="outlined"
               />
             </Grid>
@@ -116,12 +126,20 @@ const Profile = (props) => {
           <Button
             color="primary"
             variant="contained"
+            onClick={handleSubmit}
           >
             Save details
           </Button>
         </Box>
       </Card>
     </form>
+    <Grid>
+        <Card>
+    <h5>Become a member!</h5>
+        <Subscription />
+        </Card>
+    </Grid>
+    </Grid>
   );
 }
 

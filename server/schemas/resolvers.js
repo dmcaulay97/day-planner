@@ -58,6 +58,18 @@ const resolvers = {
 			const token = signToken(user);
 			return { token, user };
 		},
+		updateUser: async (parent, { username, email, password }, context) => {
+			const updatedUser = await User.findOneAndUpdate(
+				{ _id: context.user._id},
+				{
+					$set: {
+						username, email, password
+					}
+				}
+			)
+			return updatedUser
+		
+		},
 		saveEvent: async (parent, args, context) => {
 			console.log(args)
 			console.log(context.user._id);

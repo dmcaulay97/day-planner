@@ -49,6 +49,9 @@ export default function ButtonAppBar() {
             <Link to='/About' className={classes.navLinks}>
               <Button color="inherit">About</Button>
             </Link>
+            <Link to='/Profile' className={classes.navLinks}>
+              <Button color="inherit">Profile</Button>
+            </Link>
             <Link to='/' className={classes.navLinks}>
               <Button color="inherit">Logout</Button>
             </Link>
