@@ -103,3 +103,12 @@ mutation updateTask($_id: String!, $completed: Boolean!){
   }
 }
 `
+export const UPDATE_USER = gql`
+  mutation updateUser($username: String!, $email: String!, $password: String!) {
+    updateUser(username: $username, email: $email, password: $password) {
+        _id
+        username
+      }
+    }
+  
+`;
